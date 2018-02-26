@@ -184,11 +184,8 @@ public class PetProvider extends ContentProvider {
     public int update(Uri uri, ContentValues contentValues, String selection,
                       String[] selectionArgs) {
         final int match = sUriMatcher.match(uri);
-        Log.v(LOG_TAG, "[URI] " + uri);
-        Log.v(LOG_TAG, "[MATCH] = " + match);
         switch (match) {
             case PETS:
-                Log.v(LOG_TAG, "Updating all rows");
                 return updatePet(uri, contentValues, selection, selectionArgs);
             case PET_ID:
                 // For the PET_ID code, extract out the ID from the URI,
@@ -196,7 +193,6 @@ public class PetProvider extends ContentProvider {
                 // arguments will be a String array containing the actual ID.
                 selection = PetEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-                Log.v(LOG_TAG, "Updating where ID = " + selectionArgs.toString());
                 return updatePet(uri, contentValues, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("Update is not supported for " + uri);
